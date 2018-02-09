@@ -41,13 +41,14 @@ form {
 
 input {
   width: 60vw;
-  font-size: 2.5rem;
+  font-size: 3rem;
   padding: 5px 0 5px 10px;
 }
 
 input::placeholder {
   color: #d1d2d4;
 }
+
 
 .form__input-body {
   margin-top: 2.1rem;
@@ -56,7 +57,7 @@ input::placeholder {
 .button__save {
   color: #fff;
   background-color: #00A79D;
-  font-size: 2.5rem;
+  font-size: 3rem;
   padding: 5px 0 5px 10px;
   width: 60vw;
   margin: 2.1rem 0 4rem;
@@ -64,4 +65,18 @@ input::placeholder {
 
 .button__save:hover {
   background-color: #045e55;
+}
+
+.container {
+  margin: 0 auto;
+  width: 60vw;
+}
+
+.input__search {
+  font-size: 6rem;
+}
+
+.article__h2-title {
+  font-size: 3rem;
+  font-family: 'Roboto Slab', serif;
 }
