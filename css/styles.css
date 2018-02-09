@@ -1,0 +1,67 @@
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.4rem; /* =14px */
+}
+
+h1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 9.5rem;
+  /* =24px */
+}
+
+main {
+  background-color: #e5f3f2;
+}
+
+h1 {
+  color: #6D6E71;
+  font-weight: 700;
+  text-align: center;
+  padding: 5vw 0;
+}
+
+h1 span {
+  color: #00A79d;
+}
+
+form {
+  width: 60%;
+  margin: 0 auto;
+}
+
+input {
+  width: 60vw;
+  font-size: 2.5rem;
+  padding: 5px 0 5px 10px;
+}
+
+input::placeholder {
+  color: #d1d2d4;
+}
+
+.form__input-body {
+  margin-top: 2.1rem;
+}
+
+.button__save {
+  color: #fff;
+  background-color: #00A79D;
+  font-size: 2.5rem;
+  padding: 5px 0 5px 10px;
+  width: 60vw;
+  margin: 2.1rem 0 4rem;
+}
+
+.button__save:hover {
+  background-color: #045e55;
+}
