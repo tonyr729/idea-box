@@ -67,16 +67,68 @@ input::placeholder {
   background-color: #045e55;
 }
 
-.container {
+.section__bottom {
   margin: 0 auto;
+  width: 60vw;
+  border-bottom: 1px solid #D1D2D4;
+}
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
   width: 60vw;
 }
 
 .input__search {
-  font-size: 6rem;
+  font-size: 3rem;
+  margin-top: 2.1rem;
 }
 
 .article__h2-title {
+  margin-top: 4rem;
+  width: 40vw;
+  height: 4rem;
   font-size: 3rem;
   font-family: 'Roboto Slab', serif;
+}
+
+.article__button-delete {
+  margin-top: 3.3rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+}
+
+.article__button-qualityup {
+  margin-top: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+}
+
+.article__button-qualitydown {
+  margin-top: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+}
+
+.container2 {
+  margin-bottom: 1.5rem;
+  width: 220px;
+ display: inline-flex;
+ justify-content: space-between;
+}
+
+.article__p-content {
+  margin-top: 1rem;
+}
+
+.quality {
+  font-size: 2rem;
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+  align-self: center;
+  margin-top: 1rem;
 }
