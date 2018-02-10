@@ -1,14 +1,20 @@
-var saveBtn = $(".button__save");
-var ideaTitle = $('.form__input-title');
-var ideaBody = $('.form__input-body');
+var $saveBtn = $(".button__save");
+var $ideaTitle = $('.form__input-title');
+var $ideaBody = $('.form__input-body');
+var $upvoteBtn = $('.article__button-upvote');
+var $downvoteBtn = $('.article__button-downvote');
+var $sectionBottom = $('.section__bottom');
 
-saveBtn.on('click', createIdea);
+$saveBtn.on('click', createIdea);
 
 function createIdea() {
   event.preventDefault();
-  var idea = new Idea(ideaTitle.val(), ideaBody.val());
+  var idea = new Idea($ideaTitle.val(), $ideaBody.val());
   idea.prepend();
 }
+$sectionBottom.on('mouseenter', $upvoteBtn, function () {
+  $('.article__button-upvote').attr('src', 'images/upvote-hover.svg');
+});
 
 function Idea(ideaTitleValue, ideaBodyValue) {
   this.id = Date.now();
@@ -25,16 +31,12 @@ Idea.prototype.prepend = function () {
       <p class="article__p-content">${this.inputBody}</p>
     </article>
     <article class="container2">
-      <input class="article__button-qualityup" type="image" alt="delete" src="images/delete.svg">
-      <input class="article__button-qualitydown" type="image" alt="delete" src="images/delete.svg">
+      <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
+      <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
       <span class="quality">${this.quality}</span>
     </article>   
     `
-  )
-};
-
-
-
+  )};
 
 
 // $(".website-title, .bookmark-link").on('keyup', checkInput);
