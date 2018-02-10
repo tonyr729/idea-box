@@ -82,7 +82,8 @@ input::placeholder {
 
 .input__search {
   font-size: 3rem;
-  margin-top: 2.1rem;
+  margin: 2.1rem auto 0;
+  display: block;
 }
 
 .article__h2-title {
@@ -123,6 +124,7 @@ input::placeholder {
 
 .article__p-content {
   margin-top: 1rem;
+  width: 100%;
 }
 
 .quality {
