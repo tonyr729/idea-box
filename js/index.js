@@ -10,6 +10,7 @@ $saveBtn.on('click', createIdea);
 function createIdea() {
   event.preventDefault();
   var idea = new Idea($ideaTitle.val(), $ideaBody.val());
+  localStorage.setItem(idea.id, JSON.stringify(idea));
   idea.prepend();
 }
 
@@ -58,6 +59,3 @@ Idea.prototype.prepend = function () {
    
     `
   )};
-
-
-// $(".website-title, .bookmark-link").on('keyup', checkInput);
