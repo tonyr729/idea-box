@@ -6,16 +6,24 @@ var $downvoteBtn = $('.article__button-downvote');
 var $sectionBottom = $('.section__bottom');
 
 $saveBtn.on('click', createIdea);
+$sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
+$sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
+$sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
+$sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
+
+function Idea(ideaTitleValue, ideaBodyValue) {
+  this.id = Date.now();
+  this.inputTitle = ideaTitleValue;
+  this.inputBody = ideaBodyValue;
+  this.quality = 'swill';
+}
 
 function createIdea() {
   event.preventDefault();
   var idea = new Idea($ideaTitle.val(), $ideaBody.val());
   localStorage.setItem(idea.id, JSON.stringify(idea));
-  idea.prepend();
+  prependIdea(idea);
 }
-
-$sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
-$sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
 
 function upvoteHover(event) {
   if (event.type === 'mouseenter') {
@@ -25,9 +33,6 @@ function upvoteHover(event) {
   }
 }
 
-$sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
-$sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
-
 function downvoteHover(event) {
   if (event.type === 'mouseenter') {
     $(this).attr('src', 'images/downvote-hover.svg');
@@ -36,26 +41,27 @@ function downvoteHover(event) {
   }
 }
 
-function Idea(ideaTitleValue, ideaBodyValue) {
-  this.id = Date.now();
-  this.inputTitle = ideaTitleValue;
-  this.inputBody = ideaBodyValue;
-  this.quality = 'swill';
-}
-
-Idea.prototype.prepend = function () {
+function prependIdea(object) {
   $('.section__bottom').prepend(
     `<article id="${this.id}" class="container">
-      <h2 class="article__h2-title">${this.inputTitle}</h2>
+      <h2 class="article__h2-title">${object.inputTitle}</h2>
       <input class="article__button-delete" type="image" alt="delete" src="images/delete.svg">
-      <p class="article__p-content">${this.inputBody}</p>
+      <p class="article__p-content">${object.inputBody}</p>
     </article>
     <article class="container2">
       <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
       <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
-      <p><span class="quality">quality:</span> ${this.quality}</p>
+      <p><span class="quality">quality:</span> ${object.quality}</p>
     </article>
-    <footer></footer>
-   
-    `
+    <footer></footer>`
   )};
+
+$(function() {
+  for (var i = 0; i < localStorage.length; i++) {
+    var string = localStorage.getItem(localStorage.key(i));
+    if (string.includes("inputTitle")) {
+      var parsedString = JSON.parse(string);
+      prependIdea(parsedString);
+    }
+  }
+});
