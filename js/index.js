@@ -12,9 +12,28 @@ function createIdea() {
   var idea = new Idea($ideaTitle.val(), $ideaBody.val());
   idea.prepend();
 }
-$sectionBottom.on('mouseenter', $upvoteBtn, function () {
-  $('.article__button-upvote').attr('src', 'images/upvote-hover.svg');
-});
+
+$sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
+$sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
+
+function upvoteHover(event) {
+  if (event.type === 'mouseenter') {
+    $(this).attr('src', 'images/upvote-hover.svg');
+  } else {
+    $(this).attr('src', 'images/upvote.svg');
+  }
+}
+
+$sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
+$sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
+
+function downvoteHover(event) {
+  if (event.type === 'mouseenter') {
+    $(this).attr('src', 'images/downvote-hover.svg');
+  } else {
+    $(this).attr('src', 'images/downvote.svg');
+  }
+}
 
 function Idea(ideaTitleValue, ideaBodyValue) {
   this.id = Date.now();
