@@ -52,8 +52,10 @@ Idea.prototype.prepend = function () {
     <article class="container2">
       <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
       <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
-      <span class="quality">${this.quality}</span>
-    </article>   
+      <p><span class="quality">quality:</span> ${this.quality}</p>
+    </article>
+    <footer></footer>
+   
     `
   )};
 
