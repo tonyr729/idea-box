@@ -10,6 +10,8 @@ $sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
 $sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
 $sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
 $sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
+$sectionBottom.on('mouseenter', '.article__button-delete', deleteHover);
+$sectionBottom.on('mouseleave', '.article__button-delete', deleteHover);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
 
 function Idea(ideaTitleValue, ideaBodyValue) {
@@ -42,6 +44,14 @@ function downvoteHover(event) {
   }
 }
 
+function deleteHover(event) {
+  if (event.type === 'mouseenter') {
+    $(this).attr('src', 'images/delete-hover.svg');
+  } else {
+    $(this).attr('src', 'images/delete.svg');
+  }
+}
+
 function prependIdea(object) {
   $('.section__bottom').prepend(
     `<article id="${object.id}" class="container">
@@ -52,7 +62,7 @@ function prependIdea(object) {
     <article class="container2">
       <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
       <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
-      <p><span class="quality">quality:</span> ${object.quality}</p>
+      <p class="quality__light"><span class="quality">quality:</span> ${object.quality}</p>
     </article>
     <footer></footer>`
   )
