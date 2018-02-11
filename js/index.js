@@ -64,7 +64,7 @@ function prependIdea(object) {
     <article class="container2">
       <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
       <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
-      <p class="quality__light"><span class="quality">quality:</span> ${object.quality}</p>
+      <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
     </article>
     <footer></footer>`
   )
