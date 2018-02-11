@@ -13,6 +13,8 @@ $sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
 $sectionBottom.on('mouseenter', '.article__button-delete', deleteHover);
 $sectionBottom.on('mouseleave', '.article__button-delete', deleteHover);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
+$sectionBottom.on('click', '.article__button-upvote', qualityUp);
+$sectionBottom.on('click', '.article__button-downvote', qualityDown);
 
 function Idea(ideaTitleValue, ideaBodyValue) {
   this.id = Date.now();
@@ -68,7 +70,7 @@ function prependIdea(object) {
   )
 }
 
-$(function() {
+$(function () {
   for (var i = 0; i < localStorage.length; i++) {
     var string = localStorage.getItem(localStorage.key(i));
     if (string.includes("inputTitle")) {
@@ -83,4 +85,20 @@ function deleteIdea() {
   localStorage.removeItem(idValue);
   $(this).parent().next().remove();
   $(this).closest($('article')).remove();
+}
+
+function qualityUp() {
+  if ($(this).nextAll('.quality').text().includes('swill')) {
+    $(this).nextAll('.quality').text('quality: plausible');
+  } else {
+    $(this).nextAll('.quality').text('quality: genius');
+  }
+}
+
+function qualityDown() {
+  if ($(this).nextAll('.quality').text().includes('genius')) {
+    $(this).nextAll('.quality').text('quality: plausible');
+  } else {
+    $(this).nextAll('.quality').text('quality: swill');
+  }
 }
