@@ -86,9 +86,9 @@ function qualityUp() {
 }
 
 function qualityDown() {
-  if ($(this).nextAll('.quality').text().includes('plausible')) {
-    $(this).nextAll('.quality').text('quality: swill');
-  } else {
+  if ($(this).nextAll('.quality').text().includes('genius')) {
     $(this).nextAll('.quality').text('quality: plausible');
+  } else {
+    $(this).nextAll('.quality').text('quality: swill');
   }
 }
