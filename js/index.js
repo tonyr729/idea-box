@@ -11,6 +11,8 @@ $sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
 $sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
 $sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
+$sectionBottom.on('click', '.article__button-upvote', qualityUp);
+$sectionBottom.on('click', '.article__button-downvote', qualityDown);
 
 function Idea(ideaTitleValue, ideaBodyValue) {
   this.id = Date.now();
@@ -52,13 +54,13 @@ function prependIdea(object) {
     <article class="container2">
       <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
       <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
-      <p><span class="quality">quality:</span> ${object.quality}</p>
+      <p class="quality">quality: ${object.quality}</p>
     </article>
     <footer></footer>`
   )
 }
 
-$(function() {
+$(function () {
   for (var i = 0; i < localStorage.length; i++) {
     var string = localStorage.getItem(localStorage.key(i));
     if (string.includes("inputTitle")) {
@@ -73,4 +75,20 @@ function deleteIdea() {
   localStorage.removeItem(idValue);
   $(this).parent().next().remove();
   $(this).closest($('article')).remove();
+}
+
+function qualityUp() {
+  if ($(this).nextAll('.quality').text().includes('swill')) {
+    $(this).nextAll('.quality').text('quality: plausible');
+  } else {
+    $(this).nextAll('.quality').text('quality: genius');
+  }
+}
+
+function qualityDown() {
+  if ($(this).nextAll('.quality').text().includes('plausible')) {
+    $(this).nextAll('.quality').text('quality: swill');
+  } else {
+    $(this).nextAll('.quality').text('quality: plausible');
+  }
 }
