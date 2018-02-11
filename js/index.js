@@ -15,6 +15,38 @@ $sectionBottom.on('mouseleave', '.article__button-delete', deleteHover);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
 $sectionBottom.on('click', '.article__button-upvote', qualityUp);
 $sectionBottom.on('click', '.article__button-downvote', qualityDown);
+$sectionBottom.on('keydown', '.article__h2-title', disableTitleContentEditable);
+$sectionBottom.on('click', '.article__h2-title', enabletTitleContentEditable);
+$sectionBottom.on('keydown', '.article__p-content', disableBodyContentEditable);
+$sectionBottom.on('click', '.article__p-content', enableBodyContentEditable);
+
+function disableTitleContentEditable(event) {
+  if (event.keyCode === 13) {
+    $(this).attr('contentEditable', false);
+    let key = $(this).parent().attr('id');
+    let idea = JSON.parse(localStorage.getItem(key));
+    idea.inputTitle = $(this).text();
+    localStorage.setItem(key, JSON.stringify(idea));
+  }
+}
+
+function enabletTitleContentEditable() {
+  $(this).attr('contentEditable', true);
+}
+
+function disableBodyContentEditable(event) {
+  if (event.keyCode === 13) {
+    $(this).attr('contentEditable', false);
+    let key = $(this).parent().attr('id');
+    let idea = JSON.parse(localStorage.getItem(key));
+    idea.inputBody = $(this).text();
+    localStorage.setItem(key, JSON.stringify(idea));
+  }
+}
+
+function enableBodyContentEditable() {
+  $(this).attr('contentEditable', true);
+}
 
 function Idea(ideaTitleValue, ideaBodyValue) {
   this.id = Date.now();
@@ -57,9 +89,9 @@ function deleteHover(event) {
 function prependIdea(object) {
   $('.section__bottom').prepend(
     `<article id="${object.id}" class="container">
-      <h2 class="article__h2-title">${object.inputTitle}</h2>
+      <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
       <input class="article__button-delete" type="image" alt="delete" src="images/delete.svg">
-      <p class="article__p-content">${object.inputBody}</p>
+      <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
     </article>
     <article class="container2">
       <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
@@ -93,7 +125,7 @@ function qualityUp() {
   if ($(this).siblings('.quality').text().includes('swill')) {
     $(this).siblings('.quality').text('quality: plausible');
     idea.quality = 'plausible';
-  } else if ($(this).siblings('.quality').text().includes('quality: plausible')){
+  } else if ($(this).siblings('.quality').text().includes('quality: plausible')) {
     $(this).siblings('.quality').text('quality: genius');
     idea.quality = 'genius';
   }
@@ -112,3 +144,10 @@ function qualityDown() {
   }
   localStorage.setItem(key, JSON.stringify(idea));
 }
+
+
+// an editable text field, pre-populated with the existing idea title or body.
+
+// The user should be able to “commit” their changes by pressing “Enter/Return” or by clicking outside of the text field.
+
+// Commit to localStorage - If the user reloads the page, their edits will be reflected.
