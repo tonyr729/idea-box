@@ -10,6 +10,7 @@ $sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
 $sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
 $sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
 $sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
+$sectionBottom.on('click', '.article__button-delete', deleteIdea);
 
 function Idea(ideaTitleValue, ideaBodyValue) {
   this.id = Date.now();
@@ -43,7 +44,7 @@ function downvoteHover(event) {
 
 function prependIdea(object) {
   $('.section__bottom').prepend(
-    `<article id="${this.id}" class="container">
+    `<article id="${object.id}" class="container">
       <h2 class="article__h2-title">${object.inputTitle}</h2>
       <input class="article__button-delete" type="image" alt="delete" src="images/delete.svg">
       <p class="article__p-content">${object.inputBody}</p>
@@ -54,7 +55,8 @@ function prependIdea(object) {
       <p><span class="quality">quality:</span> ${object.quality}</p>
     </article>
     <footer></footer>`
-  )};
+  )
+}
 
 $(function() {
   for (var i = 0; i < localStorage.length; i++) {
@@ -65,3 +67,10 @@ $(function() {
     }
   }
 });
+
+function deleteIdea() {
+  let idValue = $(this).parent().attr('id');
+  localStorage.removeItem(idValue);
+  $(this).parent().next().remove();
+  $(this).closest($('article')).remove();
+}
