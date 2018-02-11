@@ -88,17 +88,27 @@ function deleteIdea() {
 }
 
 function qualityUp() {
-  if ($(this).nextAll('.quality').text().includes('swill')) {
-    $(this).nextAll('.quality').text('quality: plausible');
-  } else {
-    $(this).nextAll('.quality').text('quality: genius');
+  let key = $(this).parent().siblings('.container').attr('id');
+  let idea = JSON.parse(localStorage.getItem(key));
+  if ($(this).siblings('.quality').text().includes('swill')) {
+    $(this).siblings('.quality').text('quality: plausible');
+    idea.quality = 'plausible';
+  } else if ($(this).siblings('.quality').text().includes('quality: plausible')){
+    $(this).siblings('.quality').text('quality: genius');
+    idea.quality = 'genius';
   }
+  localStorage.setItem(key, JSON.stringify(idea));
 }
 
 function qualityDown() {
+  let key = $(this).parent().siblings('.container').attr('id');
+  let idea = JSON.parse(localStorage.getItem(key));
   if ($(this).nextAll('.quality').text().includes('genius')) {
     $(this).nextAll('.quality').text('quality: plausible');
+    idea.quality = 'plausible';
   } else {
     $(this).nextAll('.quality').text('quality: swill');
+    idea.quality = 'swill';
   }
+  localStorage.setItem(key, JSON.stringify(idea));
 }
