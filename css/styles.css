@@ -146,8 +146,8 @@ footer {
   font-size: 2rem;
   font-family: 'Roboto Slab', serif;
   align-self: center;
-  margin-top: 1rem;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .quality__light {
@@ -155,5 +155,5 @@ footer {
   font-weight: 400;
   font-family: 'Roboto Slab', serif;
   align-self: center;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
