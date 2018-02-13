@@ -4,6 +4,8 @@ var $ideaBody = $('.form__input-body');
 var $upvoteBtn = $('.article__button-upvote');
 var $downvoteBtn = $('.article__button-downvote');
 var $sectionBottom = $('.section__bottom');
+var $ideaSearch = $('.section__search');
+var $searchInput = $('.input__search');
 
 $saveBtn.on('click', createIdea);
 $sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
@@ -19,6 +21,7 @@ $sectionBottom.on('keydown', '.article__h2-title', disableTitleContentEditable);
 $sectionBottom.on('click', '.article__h2-title', enabletTitleContentEditable);
 $sectionBottom.on('keydown', '.article__p-content', disableBodyContentEditable);
 $sectionBottom.on('click', '.article__p-content', enableBodyContentEditable);
+$searchInput.on('click keyup input', runSearch);
 
 function disableTitleContentEditable(event) {
   if (event.keyCode === 13) {
@@ -88,17 +91,19 @@ function deleteHover(event) {
 
 function prependIdea(object) {
   $('.section__bottom').prepend(
-    `<article id="${object.id}" class="container">
-      <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
-      <input class="article__button-delete" type="image" alt="delete" src="images/delete.svg">
-      <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
-    </article>
-    <article class="container2">
-      <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
-      <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
-      <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
-    </article>
-    <footer></footer>`
+    `<article class="card">
+      <article id="${object.id}" class="container">
+        <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
+        <input class="article__button-delete" type="image" alt="delete" src="images/delete.svg">
+        <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
+      </article>
+      <article class="container2">
+        <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
+        <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
+        <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
+      </article>
+      <footer></footer>
+    </article>`
   )
 }
 
@@ -146,8 +151,23 @@ function qualityDown() {
 }
 
 
+
+function runSearch(event) {
+  event.preventDefault;
+  var searchValue = $(this).val();
+  $('.card').each(function(){
+    // if all the text in session bottom
+    if($(this).text().indexOf(searchValue.toLowerCase()) > -1){
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  })
+}
+
 // an editable text field, pre-populated with the existing idea title or body.
 
 // The user should be able to “commit” their changes by pressing “Enter/Return” or by clicking outside of the text field.
 
 // Commit to localStorage - If the user reloads the page, their edits will be reflected.
+
