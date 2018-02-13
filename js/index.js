@@ -4,8 +4,13 @@ var $ideaBody = $('.form__input-body');
 var $upvoteBtn = $('.article__button-upvote');
 var $downvoteBtn = $('.article__button-downvote');
 var $sectionBottom = $('.section__bottom');
+<<<<<<< HEAD
 var $ideaSearch = $('.section__search');
 var $searchInput = $('.input__search');
+=======
+var $searchInput = $('.input__search');
+
+>>>>>>> master
 
 $saveBtn.on('click', createIdea);
 $sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
@@ -21,7 +26,12 @@ $sectionBottom.on('keydown', '.article__h2-title', disableTitleContentEditable);
 $sectionBottom.on('click', '.article__h2-title', enabletTitleContentEditable);
 $sectionBottom.on('keydown', '.article__p-content', disableBodyContentEditable);
 $sectionBottom.on('click', '.article__p-content', enableBodyContentEditable);
+<<<<<<< HEAD
 $searchInput.on('click keyup input', runSearch);
+=======
+$searchInput.on('keyup click input', runSearch);
+
+>>>>>>> master
 
 function disableTitleContentEditable(event) {
   if (event.keyCode === 13) {
@@ -104,6 +114,10 @@ function prependIdea(object) {
       </article>
       <footer></footer>
     </article>`
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
   )
 }
 
@@ -151,6 +165,7 @@ function qualityDown() {
 }
 
 
+<<<<<<< HEAD
 
 function runSearch(event) {
   event.preventDefault;
@@ -166,8 +181,26 @@ function runSearch(event) {
 }
 
 // an editable text field, pre-populated with the existing idea title or body.
+=======
+>>>>>>> master
 
-// The user should be able to “commit” their changes by pressing “Enter/Return” or by clicking outside of the text field.
+function runSearch(event) {
+  event.preventDefault;
+  var searchValue = $(this).val();
+ $('.card').each(function(){
+  if($(this).text().indexOf(searchValue.toLowerCase()) > -1){
+    console.log('bang');
+    $(this).show();
+  } else {
+    $(this).hide();
+   }
+    })
+}
 
+
+
+<<<<<<< HEAD
 // Commit to localStorage - If the user reloads the page, their edits will be reflected.
 
+=======
+>>>>>>> master
