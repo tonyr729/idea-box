@@ -4,13 +4,7 @@ var $ideaBody = $('.form__input-body');
 var $upvoteBtn = $('.article__button-upvote');
 var $downvoteBtn = $('.article__button-downvote');
 var $sectionBottom = $('.section__bottom');
-<<<<<<< HEAD
-var $ideaSearch = $('.section__search');
 var $searchInput = $('.input__search');
-=======
-var $searchInput = $('.input__search');
-
->>>>>>> master
 
 $saveBtn.on('click', createIdea);
 $sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
@@ -26,12 +20,7 @@ $sectionBottom.on('keydown', '.article__h2-title', disableTitleContentEditable);
 $sectionBottom.on('click', '.article__h2-title', enabletTitleContentEditable);
 $sectionBottom.on('keydown', '.article__p-content', disableBodyContentEditable);
 $sectionBottom.on('click', '.article__p-content', enableBodyContentEditable);
-<<<<<<< HEAD
-$searchInput.on('click keyup input', runSearch);
-=======
 $searchInput.on('keyup click input', runSearch);
-
->>>>>>> master
 
 function disableTitleContentEditable(event) {
   if (event.keyCode === 13) {
@@ -70,7 +59,12 @@ function Idea(ideaTitleValue, ideaBodyValue) {
 
 function createIdea() {
   event.preventDefault();
-  var idea = new Idea($ideaTitle.val(), $ideaBody.val());
+  let $ideaTitleValue = $ideaTitle.val();
+  let $ideaBodyValue = $ideaBody.val();
+  if ($ideaTitle.val() === '' || $ideaBody.val() === '  ') {
+    return;
+  }
+  var idea = new Idea($ideaTitleValue, $ideaBodyValue);
   localStorage.setItem(idea.id, JSON.stringify(idea));
   prependIdea(idea);
 }
@@ -114,10 +108,7 @@ function prependIdea(object) {
       </article>
       <footer></footer>
     </article>`
-<<<<<<< HEAD
-=======
 
->>>>>>> master
   )
 }
 
@@ -164,14 +155,10 @@ function qualityDown() {
   localStorage.setItem(key, JSON.stringify(idea));
 }
 
-
-<<<<<<< HEAD
-
 function runSearch(event) {
   event.preventDefault;
   var searchValue = $(this).val();
   $('.card').each(function(){
-    // if all the text in session bottom
     if($(this).text().indexOf(searchValue.toLowerCase()) > -1){
       $(this).show();
     } else {
@@ -180,27 +167,3 @@ function runSearch(event) {
   })
 }
 
-// an editable text field, pre-populated with the existing idea title or body.
-=======
->>>>>>> master
-
-function runSearch(event) {
-  event.preventDefault;
-  var searchValue = $(this).val();
- $('.card').each(function(){
-  if($(this).text().indexOf(searchValue.toLowerCase()) > -1){
-    console.log('bang');
-    $(this).show();
-  } else {
-    $(this).hide();
-   }
-    })
-}
-
-
-
-<<<<<<< HEAD
-// Commit to localStorage - If the user reloads the page, their edits will be reflected.
-
-=======
->>>>>>> master
