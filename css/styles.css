@@ -157,3 +157,10 @@ footer {
   align-self: center;
   margin-bottom: 1rem;
 }
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: :;
+
+
+  }
