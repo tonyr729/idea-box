@@ -49,6 +49,10 @@ input::placeholder {
   color: #d1d2d4;
 }
 
+footer {
+  border-bottom: 1px solid #D1D2D4;
+}
+
 .form__input-body {
   margin-top: 2.1rem;
 }
@@ -145,10 +149,6 @@ input::placeholder {
 
 .container2 p {
   padding-top: 18px;
-}
-
-footer {
-  border-bottom: 1px solid #D1D2D4;
 }
 
 .article__p-content {

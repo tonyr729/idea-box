@@ -9,10 +9,10 @@ $saveBtn.on('click', createIdea);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
 $sectionBottom.on('click', '.article__button-upvote', increaseQuality);
 $sectionBottom.on('click', '.article__button-downvote', decreaseQuality);
-$sectionBottom.on('keydown', '.article__h2-title', disableTitleContentEditable);
-$sectionBottom.on('click', '.article__h2-title', enableTitleContentEditable);
-$sectionBottom.on('keydown', '.article__p-content', disableBodyContentEditable);
-$sectionBottom.on('click', '.article__p-content', enableBodyContentEditable);
+$sectionBottom.on('keydown blur', '.article__h2-title', disableContentEditable);
+$sectionBottom.on('click', '.article__h2-title', enableContentEditable);
+$sectionBottom.on('keydown blur', '.article__p-content', disableContentEditable);
+$sectionBottom.on('click', '.article__p-content', enableContentEditable);
 $searchInput.on('keyup click input', runSearch);
 
 $(function () {
@@ -63,36 +63,33 @@ function prependIdea(object) {
       </article>
       <footer></footer>
     </article>`
-
   )
 }
 
-function enableTitleContentEditable() {
+function enableContentEditable() {
   $(this).attr('contentEditable', true);
 }
 
-function disableTitleContentEditable(event) {
-  if (event.keyCode === 13) {
+function disableContentEditable(event) {
+  if (event.keyCode === 13 || event.type === 'focusout') {
     $(this).attr('contentEditable', false);
-    let key = $(this).parent().attr('id');
-    let idea = JSON.parse(localStorage.getItem(key));
-    idea.inputTitle = $(this).text();
-    localStorage.setItem(key, JSON.stringify(idea));
+    changeTitleStorage(this);
+    changeBodyStorage(this);
   }
 }
 
-function enableBodyContentEditable() {
-  $(this).attr('contentEditable', true);
+function changeTitleStorage(title) {
+  let key = $(title).parent().attr('id');
+  let idea = JSON.parse(localStorage.getItem(key));
+  idea.inputTitle = $(title).text();
+  localStorage.setItem(key, JSON.stringify(idea));
 }
 
-function disableBodyContentEditable(event) {
-  if (event.keyCode === 13) {
-    $(this).attr('contentEditable', false);
-    let key = $(this).parent().attr('id');
-    let idea = JSON.parse(localStorage.getItem(key));
-    idea.inputBody = $(this).text();
-    localStorage.setItem(key, JSON.stringify(idea));
-  }
+function changeBodyStorage(body) {
+  let key = $(body).parent().attr('id');
+  let idea = JSON.parse(localStorage.getItem(key));
+  idea.inputBody = $(body).text();
+  localStorage.setItem(key, JSON.stringify(idea));
 }
 
 function deleteIdea() {
@@ -133,11 +130,10 @@ function runSearch(event) {
   var searchValue = $(this).val();
  $('.card').each(function(){
   if($(this).text().indexOf(searchValue.toLowerCase()) > -1){
-    console.log('bang');
     $(this).show();
   } else {
     $(this).hide();
-   }
-    })
+  }
+  })
 }
 
