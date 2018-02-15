@@ -42,6 +42,8 @@ function createIdea() {
   var idea = new Idea($ideaTitle.val(), $ideaBody.val());
   localStorage.setItem(idea.id, JSON.stringify(idea));
   prependIdea(idea);
+  $ideaTitle.val('');
+  $ideaBody.val('');
 }
 
 function prependIdea(object) {
