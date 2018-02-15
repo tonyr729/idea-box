@@ -1,9 +1,11 @@
-var $saveBtn = $(".button__save");
-var $ideaTitle = $('.form__input-title');
-var $ideaBody = $('.form__input-body');
-var $sectionBottom = $('.section__bottom');
-var $searchInput = $('.input__search');
-
+let $saveBtn = $(".button__save");
+let $ideaTitle = $('.form__input-title');
+let $ideaBody = $('.form__input-body');
+let $sectionBottom = $('.section__bottom');
+let $searchInput = $('.input__search');
+let $sortBtn = $('.sorting-container button');
+let cardList = [];
+let isSorted = false;
 
 $saveBtn.on('click', createIdea);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
@@ -14,12 +16,13 @@ $sectionBottom.on('click', '.article__h2-title', enableContentEditable);
 $sectionBottom.on('keydown blur', '.article__p-content', disableContentEditable);
 $sectionBottom.on('click', '.article__p-content', enableContentEditable);
 $searchInput.on('keyup click input', runSearch);
+$sortBtn.on('click', sortByQuality);
 
 $(function () {
-  for (var i = 0; i < localStorage.length; i++) {
-    var string = localStorage.getItem(localStorage.key(i));
+  for (let i = 0; i < localStorage.length; i++) {
+    let string = localStorage.getItem(localStorage.key(i));
     if (string.includes("inputTitle")) {
-      var parsedString = JSON.parse(string);
+      let parsedString = JSON.parse(string);
       prependIdea(parsedString);
     }
   }
@@ -30,6 +33,7 @@ function Idea(ideaTitleValue, ideaBodyValue) {
   this.inputTitle = ideaTitleValue;
   this.inputBody = ideaBodyValue;
   this.quality = 'swill';
+  this.qualityValue = 1;
 }
 
 function createIdea() {
@@ -39,8 +43,9 @@ function createIdea() {
   if ($ideaTitle.val() === '' || $ideaBody.val() === '') {
     return;
   }
-  var idea = new Idea($ideaTitle.val(), $ideaBody.val());
+  const idea = new Idea($ideaTitle.val(), $ideaBody.val());
   localStorage.setItem(idea.id, JSON.stringify(idea));
+  cardList.push(idea);
   prependIdea(idea);
   $ideaTitle.val('');
   $ideaBody.val('');
@@ -74,7 +79,7 @@ function disableContentEditable(event) {
   if (event.keyCode === 13 || event.type === 'focusout') {
     $(this).attr('contentEditable', false);
     if ($(this).hasClass('article__h2-title')) {
-      changeTitleStorage(this);  
+      changeTitleStorage(this);
     } else {
       changeBodyStorage(this);
     }
@@ -105,6 +110,16 @@ function deleteIdea() {
 function increaseQuality() {
   let key = $(this).parent().siblings('.container').attr('id');
   let idea = JSON.parse(localStorage.getItem(key));
+  cardList.forEach(function (card) {
+    if (idea.id === card.id) {
+      card.qualityValue++;
+      if (card.qualityValue === 2) {
+        card.quality = 'plausible';
+      } else if (card.qualityValue === 3) {
+        card.quality = 'genius';
+      }
+    }
+  });
   if ($(this).siblings('.quality').text().includes('swill')) {
     $(this).siblings('.quality').text('quality: plausible');
     idea.quality = 'plausible';
@@ -118,6 +133,16 @@ function increaseQuality() {
 function decreaseQuality() {
   let key = $(this).parent().siblings('.container').attr('id');
   let idea = JSON.parse(localStorage.getItem(key));
+  cardList.forEach(function (card) {
+    if (idea.id === card.id && card.qualityValue > 1) {
+      card.qualityValue--;
+      if (card.qualityValue === 2) {
+        card.quality = 'plausible';
+      } else if (card.qualityValue === 1) {
+        card.quality = 'swill';
+      }
+    }
+  });
   if ($(this).nextAll('.quality').text().includes('genius')) {
     $(this).nextAll('.quality').text('quality: plausible');
     idea.quality = 'plausible';
@@ -130,13 +155,32 @@ function decreaseQuality() {
 
 function runSearch(event) {
   event.preventDefault;
-  var searchValue = $(this).val();
- $('.card').each(function(){
-  if($(this).text().indexOf(searchValue.toLowerCase()) > -1){
-    $(this).show();
-  } else {
-    $(this).hide();
-  }
+  let searchValue = $(this).val();
+  $('.card').each(function () {
+    if ($(this).text().indexOf(searchValue.toLowerCase()) > -1) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
   })
 }
 
+function sortByQuality() {
+  $('.card').each(function () {
+    this.remove();
+  });
+  if (!isSorted) {
+    cardList.sort(function (a, b) {
+      return a.qualityValue - b.qualityValue;
+    });
+    isSorted = true;
+  } else {
+    cardList.sort(function (a, b) {
+      return a.qualityValue + b.qualityValue;
+    });
+    isSorted = false;
+  }
+  cardList.forEach(function (card) {
+    prependIdea(card);
+  })
+}
