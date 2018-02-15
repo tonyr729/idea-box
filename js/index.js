@@ -73,8 +73,11 @@ function enableContentEditable() {
 function disableContentEditable(event) {
   if (event.keyCode === 13 || event.type === 'focusout') {
     $(this).attr('contentEditable', false);
-    changeTitleStorage(this);
-    changeBodyStorage(this);
+    if ($(this).hasClass('article__h2-title')) {
+      changeTitleStorage(this);  
+    } else {
+      changeBodyStorage(this);
+    }
   }
 }
 
