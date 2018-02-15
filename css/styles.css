@@ -82,6 +82,19 @@ footer {
     display: block;
 }
 
+.sorting-container {
+    width: 60vw;
+    margin: 0 auto;
+}
+
+.sorting-container button {
+    margin: 2rem auto 0;
+    padding: 10px 10px;
+    background-color: #00A79D;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
 .container {
   display: flex;
   flex-flow: row wrap;
