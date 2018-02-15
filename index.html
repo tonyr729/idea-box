@@ -13,18 +13,18 @@
 </head>
 
 <body>
-  <main>
+  <main role="main">
     <h1><span>idea</span>box</h1>
-    <form action="">
-      <input type="text" class="form__input-title" placeholder="Title">
-      <input type="text" class="form__input-body" placeholder="Body">
-      <button type="submit" class="button__save">save</button>
+    <form action="" role="form">
+      <input type="text" aria-label="input title text" class="form__input-title" placeholder="Title">
+      <input type="text" aria-label="input body text" class="form__input-body" placeholder="Body">
+      <button type="submit" aria-label="save" class="button__save">save</button>
     </form>
   </main>
-  <section class="section__search">
-    <input class="input__search" type="text" placeholder="Search">
-  </section>
-  <section class="section__bottom">
+  <form role="search" class="section__search">
+    <input class="input__search" aria-label="search field" type="text" placeholder="Search">
+  </form>
+  <section aria-label="idea cards" class="section__bottom">
 
     <!--<article class="container">-->
       <!--<h2 class="article__h2-title">Example Idea 1</h2>-->

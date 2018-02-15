@@ -44,12 +44,14 @@ function prependIdea(object) {
     `<article class="card">
       <article id="${object.id}" class="container">
         <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
-        <input class="article__button-delete" type="image" alt="delete" src="images/delete.svg">
+        <input class="article__button-delete" type="" alt="delete button" src="">
         <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
       </article>
       <article class="container2">
-        <input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">
-        <input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">
+        <!--<input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">-->
+        <!--<input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">-->
+        <input class="article__button-upvote" type="" alt="upvote button" src="">
+        <input class="article__button-downvote" type="" alt="downvote button" src="">
         <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
       </article>
       <footer></footer>
@@ -132,34 +134,3 @@ function runSearch(event) {
     })
 }
 
-
-// $sectionBottom.on('mouseenter', '.article__button-upvote', upvoteHover);
-// $sectionBottom.on('mouseleave', '.article__button-upvote', upvoteHover);
-// $sectionBottom.on('mouseenter', '.article__button-downvote', downvoteHover);
-// $sectionBottom.on('mouseleave', '.article__button-downvote', downvoteHover);
-// $sectionBottom.on('mouseenter', '.article__button-delete', deleteHover);
-// $sectionBottom.on('mouseleave', '.article__button-delete', deleteHover);
-
-// function upvoteHover(event) {
-//   if (event.type === 'mouseenter') {
-//     $(this).attr('src', 'images/upvote-hover.svg');
-//   } else {
-//     $(this).attr('src', 'images/upvote.svg');
-//   }
-// }
-
-// function downvoteHover(event) {
-//   if (event.type === 'mouseenter') {
-//     $(this).attr('src', 'images/downvote-hover.svg');
-//   } else {
-//     $(this).attr('src', 'images/downvote.svg');
-//   }
-// }
-
-// function deleteHover(event) {
-//   if (event.type === 'mouseenter') {
-//     $(this).attr('src', 'images/delete-hover.svg');
-//   } else {
-//     $(this).attr('src', 'images/delete.svg');
-//   }
-// }
