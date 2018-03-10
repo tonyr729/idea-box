@@ -23,7 +23,7 @@ $(function () {
     let string = localStorage.getItem(localStorage.key(i));
     if (string.includes("inputTitle")) {
       let parsedString = JSON.parse(string);
-      prependIdea(parsedString);
+      templateIdea(parsedString);
     }
   }
 });
@@ -38,37 +38,44 @@ function Idea(ideaTitleValue, ideaBodyValue) {
 
 function createIdea() {
   event.preventDefault();
-  let $ideaTitleValue = $ideaTitle.val();
-  let $ideaBodyValue = $ideaBody.val();
   if ($ideaTitle.val() === '' || $ideaBody.val() === '') {
     return;
   }
+  prependCard();
+  clearInputFields();
+}
+
+function prependCard() {
   const idea = new Idea($ideaTitle.val(), $ideaBody.val());
   localStorage.setItem(idea.id, JSON.stringify(idea));
   cardList.push(idea);
-  prependIdea(idea);
-  $ideaTitle.val('');
-  $ideaBody.val('');
+  templateIdea(idea);
+
 }
 
-function prependIdea(object) {
+function templateIdea(object) {
   $('.section__bottom').prepend(
     `<article class="card">
-      <article id="${object.id}" class="container">
-        <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
-        <input class="article__button-delete" type="" alt="delete button" src="">
-        <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
-      </article>
-      <article class="container2">
-        <!--<input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">-->
-        <!--<input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">-->
-        <input class="article__button-upvote" type="" alt="upvote button" src="">
-        <input class="article__button-downvote" type="" alt="downvote button" src="">
-        <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
-      </article>
-      <footer></footer>
+    <article id="${object.id}" class="container">
+    <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
+    <input class="article__button-delete" type="" alt="delete button" src="">
+    <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
+    </article>
+    <article class="container2">
+    <!--<input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">-->
+    <!--<input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">-->
+    <input class="article__button-upvote" type="" alt="upvote button" src="">
+    <input class="article__button-downvote" type="" alt="downvote button" src="">
+    <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
+    </article>
+    <footer></footer>
     </article>`
   )
+}
+
+function clearInputFields() {
+  $ideaTitle.val('');
+  $ideaBody.val('');
 }
 
 function enableContentEditable() {
@@ -181,6 +188,6 @@ function sortByQuality() {
     isSorted = false;
   }
   cardList.forEach(function (card) {
-    prependIdea(card);
+    templateIdea(card);
   })
 }
