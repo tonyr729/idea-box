@@ -9,8 +9,8 @@ let isSorted = false;
 
 $saveBtn.on('click', createIdea);
 $sectionBottom.on('click', '.article__button-delete', deleteIdea);
-$sectionBottom.on('click', '.article__button-upvote', increaseQuality);
-$sectionBottom.on('click', '.article__button-downvote', decreaseQuality);
+$sectionBottom.on('click', '.article__button-upvote', changeVote);
+$sectionBottom.on('click', '.article__button-downvote', changeVote);
 $sectionBottom.on('keydown blur', '.article__h2-title', disableContentEditable);
 $sectionBottom.on('click', '.article__h2-title', enableContentEditable);
 $sectionBottom.on('keydown blur', '.article__p-content', disableContentEditable);
@@ -23,7 +23,7 @@ $(function () {
     let string = localStorage.getItem(localStorage.key(i));
     if (string.includes("inputTitle")) {
       let parsedString = JSON.parse(string);
-      prependIdea(parsedString);
+      templateIdea(parsedString);
     }
   }
 });
@@ -38,37 +38,43 @@ function Idea(ideaTitleValue, ideaBodyValue) {
 
 function createIdea() {
   event.preventDefault();
-  let $ideaTitleValue = $ideaTitle.val();
-  let $ideaBodyValue = $ideaBody.val();
   if ($ideaTitle.val() === '' || $ideaBody.val() === '') {
     return;
   }
+  prependCard();
+  clearInputFields();
+}
+
+function prependCard() {
   const idea = new Idea($ideaTitle.val(), $ideaBody.val());
   localStorage.setItem(idea.id, JSON.stringify(idea));
   cardList.push(idea);
-  prependIdea(idea);
-  $ideaTitle.val('');
-  $ideaBody.val('');
+  templateIdea(idea);
 }
 
-function prependIdea(object) {
+function templateIdea(object) {
   $('.section__bottom').prepend(
     `<article class="card">
-      <article id="${object.id}" class="container">
-        <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
-        <input class="article__button-delete" type="" alt="delete button" src="">
-        <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
-      </article>
-      <article class="container2">
-        <!--<input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">-->
-        <!--<input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">-->
-        <input class="article__button-upvote" type="" alt="upvote button" src="">
-        <input class="article__button-downvote" type="" alt="downvote button" src="">
-        <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
-      </article>
-      <footer></footer>
+    <article id="${object.id}" class="container">
+    <h2 class="article__h2-title" contenteditable="true">${object.inputTitle}</h2>
+    <input class="article__button-delete" type="" alt="delete button" src="">
+    <p class="article__p-content" contenteditable="true">${object.inputBody}</p>
+    </article>
+    <article class="container2">
+    <!--<input class="article__button-upvote" type="image" alt="upvote" src="images/upvote.svg">-->
+    <!--<input class="article__button-downvote" type="image" alt="downvote" src="images/downvote.svg">-->
+    <input class="article__button-upvote" type="" alt="upvote button" src="">
+    <input class="article__button-downvote" type="" alt="downvote button" src="">
+    <p class="quality">quality:<span class="quality__light"> ${object.quality}</span></p>
+    </article>
+    <footer></footer>
     </article>`
   )
+}
+
+function clearInputFields() {
+  $ideaTitle.val('');
+  $ideaBody.val('');
 }
 
 function enableContentEditable() {
@@ -107,51 +113,24 @@ function deleteIdea() {
   $(this).closest($('article')).remove();
 }
 
-function increaseQuality() {
+function changeVote() {
+  let voteText = $(this).parent().find('.quality__light');
   let key = $(this).parent().siblings('.container').attr('id');
-  let idea = JSON.parse(localStorage.getItem(key));
-  cardList.forEach(function (card) {
-    if (idea.id === card.id) {
-      card.qualityValue++;
-      if (card.qualityValue === 2) {
-        card.quality = 'plausible';
-      } else if (card.qualityValue === 3) {
-        card.quality = 'genius';
-      }
-    }
-  });
-  if ($(this).siblings('.quality').text().includes('swill')) {
-    $(this).siblings('.quality').text('quality: plausible');
-    idea.quality = 'plausible';
-  } else if ($(this).siblings('.quality').text().includes('quality: plausible')) {
-    $(this).siblings('.quality').text('quality: genius');
-    idea.quality = 'genius';
-  }
-  localStorage.setItem(key, JSON.stringify(idea));
-}
-
-function decreaseQuality() {
-  let key = $(this).parent().siblings('.container').attr('id');
-  let idea = JSON.parse(localStorage.getItem(key));
-  cardList.forEach(function (card) {
-    if (idea.id === card.id && card.qualityValue > 1) {
-      card.qualityValue--;
-      if (card.qualityValue === 2) {
-        card.quality = 'plausible';
-      } else if (card.qualityValue === 1) {
-        card.quality = 'swill';
-      }
-    }
-  });
-  if ($(this).nextAll('.quality').text().includes('genius')) {
-    $(this).nextAll('.quality').text('quality: plausible');
-    idea.quality = 'plausible';
+  let ideaObject = JSON.parse(localStorage.getItem(key));
+  let quality = [' swill', ' plausible', ' genius'];
+  var index = quality.indexOf(voteText.text());
+  console.log('changeVote()')
+  if ($(this).hasClass('article__button-upvote')) {
+      console.log('upvote')
+      index++;
+      ideaObject.quality = quality[index];
   } else {
-    $(this).nextAll('.quality').text('quality: swill');
-    idea.quality = 'swill';
+      index--;
+      ideaObject.quality = quality[index];
   }
-  localStorage.setItem(key, JSON.stringify(idea));
-}
+  voteText.text(quality[index]);
+  localStorage.setItem(key, JSON.stringify(ideaObject));
+};
 
 function runSearch(event) {
   event.preventDefault;
@@ -181,6 +160,6 @@ function sortByQuality() {
     isSorted = false;
   }
   cardList.forEach(function (card) {
-    prependIdea(card);
+    templateIdea(card);
   })
 }
