@@ -18,6 +18,7 @@ $sectionBottom.on('click', '.article__p-content', enableContentEditable);
 $searchInput.on('keyup click input', runSearch);
 $sortBtn.on('click', sortByQuality);
 
+
 $(function () {
   for (let i = 0; i < localStorage.length; i++) {
     let string = localStorage.getItem(localStorage.key(i));
